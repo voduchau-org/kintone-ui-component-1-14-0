@@ -46,7 +46,24 @@ const renderName = (cellData, rowData, index) => {
     value: cellData,
     selectedIndex: 0,
   });
-  return dropdown;
+  const div = document.createElement("div");
+  div.appendChild(dropdown);
+  const a = new Dropdown({
+    items: [
+      {
+        label: "Nguyen Hoang Anh",
+        value: "a",
+      },
+      {
+        label: "Vo Duc Hau",
+        value: "hau",
+      },
+    ],
+    value: cellData,
+    selectedIndex: 0,
+  });
+  div.appendChild(a);
+  return div;
 };
 
 const renderAddress = (cellData, rowData, index) => {
@@ -101,6 +118,23 @@ const renderMultiChoice = (cellData) => {
 };
 
 const Template = (args) => {
+  if (args.customCSS) {
+    const style = document.createElement("style");
+    style.id = "kuc-table-style";
+    style.textContent = `
+      .table-classname {
+        --kuc-table-header-cell-width: 200px;
+        --kuc-table-header-cell-3-width: 320px;
+        --kuc-table-header-height: 50px;
+        --kuc-table-header-color: #cecf1f;
+        --kuc-table-header-font-size: 20px;
+        --kuc-table-header-cell-background-color: #3f4b53;
+      }
+    `;
+    document.head.appendChild(style);
+  } else {
+    document.getElementById("kuc-table-style")?.remove();
+  }
   const table = new Table({ ...args });
   table.addEventListener("change", (event) => {
     console.log(event, "event");
@@ -112,6 +146,11 @@ const Template = (args) => {
 // https://storybook.js.org/docs/react/essentials/controls#annotation
 // So please don't edit columns value on controls tab.
 const columns = [
+  {
+    title: "Test",
+    field: "test",
+    requiredIcon: true,
+  },
   {
     title: "Name",
     field: "name",
@@ -126,7 +165,7 @@ const columns = [
   {
     title: "Age",
     field: "age",
-    // render: renderAge,
+    render: renderAge,
   },
   {
     title: "Date",
@@ -159,6 +198,7 @@ const data = [
     gender: "female",
     multichoice: ["banana", "tomato"],
     address: ["vn"],
+    test: "Table component Table component Table component Table component Table component  SSR_3317_remove_overflow_on_Table_custom_css",
   },
   {
     name: "hau",
@@ -168,11 +208,13 @@ const data = [
     gender: "male",
     multichoice: ["orange", "banana"],
     address: ["ja"],
+    test: "Kintone UI Component allows you to create Kintone-like components easily. This library is useful to build Kintone customization and plug-in.",
   },
 ];
 
 export const Base = Template.bind({});
 Base.args = {
+  customCSS: false,
   label: "Table component",
   headerVisible: true,
   visible: true,
