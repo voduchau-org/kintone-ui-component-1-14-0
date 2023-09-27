@@ -113,7 +113,7 @@ const renderTest = (cellData) => {
   div.style.cssText = `overflow-wrap: anywhere`;
   div.textContent = cellData;
   return div;
-}
+};
 
 const renderMultiChoice = (cellData) => {
   const multichoice = new MultiChoice({
