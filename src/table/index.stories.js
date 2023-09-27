@@ -28,6 +28,9 @@ export default {
 
 const renderAge = (cellData, rowData) => {
   const text = new TextArea({ value: cellData });
+  text.style.cssText = `
+    max-width: 350px;
+  `;
   return text;
 };
 
@@ -105,6 +108,13 @@ const renderGender = (cellData) => {
   return radioButton;
 };
 
+const renderTest = (cellData) => {
+  const div = document.createElement("div");
+  div.style.cssText = `overflow-wrap: anywhere`;
+  div.textContent = cellData;
+  return div;
+}
+
 const renderMultiChoice = (cellData) => {
   const multichoice = new MultiChoice({
     items: [
@@ -124,7 +134,7 @@ const Template = (args) => {
     style.textContent = `
       .table-classname {
         --kuc-table-header-cell-width: 200px;
-        --kuc-table-header-cell-3-width: 320px;
+        --kuc-table-header-cell-3-width: 370px;
         --kuc-table-header-height: 50px;
         --kuc-table-header-color: #cecf1f;
         --kuc-table-header-font-size: 20px;
@@ -150,6 +160,7 @@ const columns = [
     title: "Test",
     field: "test",
     requiredIcon: true,
+    render: renderTest,
   },
   {
     title: "Name",
