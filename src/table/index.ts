@@ -16,7 +16,7 @@ import {
 } from "../base/validator";
 
 import { TABLE_CSS } from "./style";
-import { Column, TableChangeEventDetail, TableProps } from "./type";
+import { TableChangeEventDetail, TableColumn, TableProps } from "./type";
 
 const cellClassName = "kuc-table__table__body__row__cell-data";
 const rowClassName = "kuc-table__table__body__row";
@@ -42,7 +42,7 @@ let exportTable;
       "";
     @property({ type: String, reflect: true, attribute: "id" }) id = "";
     @property({ type: String }) label = "";
-    @property({ type: Array }) columns: Column[] = [];
+    @property({ type: Array }) columns: TableColumn[] = [];
     @property({ type: Array }) data: T[] = [];
     @property({ type: Boolean }) actionButton = true;
     @property({ type: Boolean }) headerVisible = true;
@@ -136,7 +136,7 @@ let exportTable;
       `;
     }
 
-    private _getColumnHeaderTemplate(column: Column) {
+    private _getColumnHeaderTemplate(column: TableColumn) {
       return html`
         <th
           class="kuc-table__table__header__cell"
@@ -286,7 +286,7 @@ let exportTable;
         this.columns.length
       ] as HTMLTableCellElement;
       const addRowButton = firstActionsCell.querySelector(
-        `.${btnAddRowClassName}`
+        `.${btnAddRowClassName}`,
       ) as HTMLButtonElement;
       addRowButton.focus();
     }
@@ -309,7 +309,7 @@ let exportTable;
     private _getSvgDOM(fillPath: string, dPath: string) {
       const iconSvg = document.createElementNS(
         "http://www.w3.org/2000/svg",
-        "svg"
+        "svg",
       );
       iconSvg.setAttribute("fill", "none");
       iconSvg.setAttribute("width", "18");
@@ -319,7 +319,7 @@ let exportTable;
 
       const iconPath = document.createElementNS(
         "http://www.w3.org/2000/svg",
-        "path"
+        "path",
       );
       iconPath.setAttribute("d", dPath);
       iconPath.setAttribute("fill-rule", "evenodd");
